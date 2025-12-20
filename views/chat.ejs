@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ask About <%= name %></title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <%- include("partials/header") %>
+
+  <h1>Ask about <%= name %></h1>
+  <p>Ask me anything about Michael’s background, strengths, projects, and interests.</p>
+
+  <div class="chat-box" id="chatBox"></div>
+
+  <form id="chatForm" class="chat-form">
+    <input
+      id="questionInput"
+      type="text"
+      placeholder="Type a question…"
+      autocomplete="off"
+      required
+    />
+    <button type="submit">Send</button>
+  </form>
+
+  <script>
+    const chatBox = document.getElementById("chatBox");
+    const chatForm = document.getElementById("chatForm");
+    const questionInput = document.getElementById("questionInput");
+
+    function addMessage(role, text) {
+      const message = document.createElement("div");
+      message.className = role === "user" ? "msg user" : "msg bot";
+      message.textContent = text;
+      chatBox.appendChild(message);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    chatForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const question = questionInput.value.trim();
+      if (!question) return;
+
+      addMessage("user", question);
+      questionInput.value = "";
+
+      try {
+        addMessage("bot", "Thinking…");
+
+        const res = await fetch("/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question })
+        });
+
+        const data = await res.json();
+
+        // Remove the “Thinking…” message (last bot message)
+        chatBox.lastChild.remove();
+
+        if (data.answer) {
+          addMessage("bot", data.answer);
+        } else {
+          addMessage("bot", data.error || "Something went wrong.");
+        }
+      } catch (err) {
+        // Remove the “Thinking…” message if it exists
+        if (chatBox.lastChild && chatBox.lastChild.textContent === "Thinking…") {
+          chatBox.lastChild.remove();
+        }
+        addMessage("bot", "Network error. Please try again.");
+      }
+    });
+  </script>
+</body>
+</html>

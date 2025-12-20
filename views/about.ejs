@@ -7,15 +7,48 @@
 </head>
 <body>
 
-  <%- include("partials/header") %>
+    <%- include("partials/header") %>
 
-  <h1>About Me</h1>
-  <p>Hi, I’m <strong><%= name %></strong>.</p>
+    <h1>About <%= profile.basics.fullName %></h1>
 
-  <p>
-    I’m an Information Systems student at BYU, MTC teacher, and builder of meaningful
-    technology.
-  </p>
+    <p><%= profile.basics.bio %></p>
+
+    <h2>Strengths</h2>
+    <ul>
+    <% profile.strengths.forEach(strength => { %>
+        <li><%= strength %></li>
+    <% }) %>
+    </ul>
+
+    <h2>Hobbies</h2>
+    <ul>
+    <% profile.hobbies.forEach(hobby => { %>
+        <li><%= hobby %></li>
+    <% }) %>
+    </ul>
+
+    <h2>Projects</h2>
+
+    <% profile.projects.forEach(project => { %>
+    <div class="project">
+        <h3><%= project.name %></h3>
+
+        <p><%= project.description %></p>
+
+        <% if (project.technologies) { %>
+        <p>
+            <strong>Technologies:</strong>
+            <%= project.technologies.join(", ") %>
+        </p>
+        <% } %>
+
+        <p>
+        <strong>Status:</strong> <%= project.status %>
+        </p>
+    </div>
+    <% }) %>
+
+    <%- include("partials/chatWidget") %>
 
 </body>
 </html>
