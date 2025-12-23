@@ -1,39 +1,160 @@
-/* =========================
-   Global styles
-   ========================= */
+/* =====================================================
+   THEME VARIABLES (DARK ONLY)
+   ===================================================== */
+
+:root {
+  /* ===== Site Backgrounds ===== */
+  --bg-primary: #0b0f1a;
+  --bg-secondary: #111827;
+
+  /* ===== Site Text ===== */
+  --text-primary: #ffffff;
+  --text-secondary: #c7c9d1;
+
+  /* ===== Accents ===== */
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-cyan: #22d3ee;
+
+  /* ===== Glow ===== */
+  --glow-blue: rgba(59, 130, 246, 0.35);
+  --glow-purple: rgba(139, 92, 246, 0.35);
+
+  /* ===== Chat ===== */
+  --chat-bg: #0f172a;
+  --chat-header-bg: #111827;
+  --chat-text-primary: #ffffff;
+  --chat-text-secondary: #cbd5f5;
+  --chat-bubble-user: #1e293b;
+  --chat-bubble-bot: #1e40af;
+  --chat-input-bg: #020617;
+  --chat-border: rgba(255, 255, 255, 0.1);
+}
+
+/* =====================================================
+   GLOBAL STYLES
+   ===================================================== */
 
 body {
-  font-family: Arial, sans-serif;
-  margin: 40px;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: var(--bg-primary);
+  background-image: url(images/waves.png);
+  color: var(--text-primary);
 }
 
-nav a {
-  margin-right: 10px;
+/* Text hierarchy */
+p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  color: var(--text-primary);
+}
+
+/* Links & Navigation */
+a {
+  color: var(--accent-blue);
   text-decoration: none;
-  color: #333;
 }
 
+a:hover {
+  color: var(--accent-purple);
+}
+
+/* NAV BAR CONTAINER */
+nav {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem; /* spacing between links */
+  padding: 1rem 2rem;
+  position: relative;
+}
+
+nav::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+
+  width: 85%;
+  height: 1px;
+
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+
+  pointer-events: none;
+}
+
+/* NAV LINKS */
+nav a {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+
+  transition: 
+    color 0.2s ease,
+    text-shadow 0.2s ease;
+}
+
+/* HOVER STATE (keep white like you want) */
 nav a:hover {
-  text-decoration: underline;
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
 }
 
-/* =========================
-   Projects section
-   ========================= */
+/* ACTIVE / CURRENT PAGE */
+nav a.active {
+  color: #ffffff;
+}
+
+
+/* =====================================================
+   PROJECTS SECTION
+   ===================================================== */
 
 .project {
   margin-bottom: 25px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--chat-border);
 }
 
 .project h3 {
   margin-bottom: 5px;
 }
 
-/* =========================
-   Floating Chat Button
-   ========================= */
+/* =====================================================
+   BUTTONS
+   ===================================================== */
+
+.button {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 20px var(--glow-purple);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px var(--glow-blue);
+}
+
+/* =====================================================
+   FLOATING CHAT BUTTON
+   ===================================================== */
 
 .chat-toggle {
   position: fixed;
@@ -53,32 +174,11 @@ nav a:hover {
   cursor: pointer;
 
   background: #111;
-  color: #fff;
+  color: #ffffff;
 
   z-index: 1001;
-
   transition: transform 0.25s ease;
   animation: subtlePulse 3s ease-in-out infinite;
-}
-
-/* Glow halo */
-.chat-toggle::before {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-
-  background: conic-gradient(
-    from 0deg,
-    #2563eb,
-    black
-  );
-
-  filter: blur(10px);
-  opacity: 0;
-  transition: opacity 0.25s ease;
-
-  z-index: -1;
 }
 
 .chat-toggle:hover {
@@ -94,9 +194,15 @@ nav a:hover {
   transform: scale(1.05);
 }
 
-/* =========================
-   Chat Widget Container
-   ========================= */
+.chat-toggle.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.8);
+}
+
+/* =====================================================
+   CHAT WIDGET
+   ===================================================== */
 
 .chat-widget {
   position: fixed;
@@ -106,26 +212,22 @@ nav a:hover {
   width: 320px;
   height: 420px;
 
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+  background-color: var(--chat-bg);
+  color: var(--chat-text-primary);
 
+  border-radius: 16px;
+  overflow: hidden;
+
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
   display: flex;
   flex-direction: column;
-
   z-index: 1000;
-}
 
-/* Chat open / close animation */
-
-.chat-widget {
   opacity: 0;
   transform: scale(0.9) translateY(10px);
   pointer-events: none;
 
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .chat-widget.open {
@@ -134,10 +236,9 @@ nav a:hover {
   pointer-events: auto;
 }
 
-
-/* =========================
-   Chat Header
-   ========================= */
+/* =====================================================
+   CHAT HEADER
+   ===================================================== */
 
 .chat-header {
   display: flex;
@@ -145,9 +246,19 @@ nav a:hover {
   align-items: center;
 
   padding: 12px 14px;
-  border-bottom: 1px solid #eee;
+  background-color: var(--chat-header-bg);
+  color: var(--chat-text-primary);
 
+  border-bottom: 1px solid var(--chat-border);
   font-weight: bold;
+
+  border-top-left-radius: 16px; 
+  border-top-right-radius: 16px;
+}
+
+.chat-header .chat-controls {
+  display: flex;
+  gap: 6px;
 }
 
 .chat-header button {
@@ -155,11 +266,12 @@ nav a:hover {
   background: none;
   cursor: pointer;
   font-size: 18px;
+  color: inherit;
 }
 
-/* =========================
-   Chat Messages
-   ========================= */
+/* =====================================================
+   CHAT MESSAGES
+   ===================================================== */
 
 .chat-box {
   flex: 1;
@@ -170,7 +282,6 @@ nav a:hover {
 .msg {
   padding: 10px 12px;
   margin: 8px 0;
-
   border-radius: 12px;
   max-width: 80%;
   white-space: pre-wrap;
@@ -178,32 +289,37 @@ nav a:hover {
 
 .msg.user {
   margin-left: auto;
-  background: #f0f0f0;
+  background-color: var(--chat-bubble-user);
 }
 
 .msg.bot {
   margin-right: auto;
-  background: #e8f0ff;
+  background-color: var(--chat-bubble-bot);
+  color: var(--chat-text-primary);
 }
 
-/* =========================
-   Chat Input
-   ========================= */
+/* =====================================================
+   CHAT INPUT
+   ===================================================== */
 
 .chat-form {
   display: flex;
   gap: 8px;
   padding: 10px;
-
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--chat-border);
 }
 
 .chat-form input {
   flex: 1;
   padding: 8px;
-
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--chat-border);
+  background-color: var(--chat-input-bg);
+  color: var(--chat-text-primary);
+}
+
+.chat-form input::placeholder {
+  color: var(--chat-text-secondary);
 }
 
 .chat-form button {
@@ -211,18 +327,47 @@ nav a:hover {
   border-radius: 8px;
   border: none;
   cursor: pointer;
+  background: var(--accent-blue);
+  color: #ffffff;
 }
 
-/* =========================
-   Animations
-   ========================= */
+/* =====================================================
+   SUGGESTED QUESTIONS
+   ===================================================== */
+
+.suggested-questions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.suggested-questions button {
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 999px;
+  border: 1px solid var(--chat-border);
+  background: transparent;
+  color: var(--chat-text-primary);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.suggested-questions button:hover {
+  background: var(--chat-bubble-user);
+  transform: translateY(-1px);
+}
+
+/* =====================================================
+   ANIMATIONS
+   ===================================================== */
 
 @keyframes subtlePulse {
   0% {
     box-shadow: 0 6px 20px rgba(0,0,0,0.25);
   }
   50% {
-    box-shadow: 0 6px 24px rgba(37, 99, 235, 0.35);
+    box-shadow: 0 6px 24px var(--glow-blue);
   }
   100% {
     box-shadow: 0 6px 20px rgba(0,0,0,0.25);
@@ -238,105 +383,16 @@ nav a:hover {
   }
 }
 
-/* Suggested question buttons */
-
-.suggested-questions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.suggested-questions button {
-  padding: 6px 10px;
-  font-size: 13px;
-
-  border-radius: 999px;
-  border: 1px solid #ddd;
-
-  background: #f9f9f9;
-  cursor: pointer;
-
-  transition: background 0.2s ease, transform 0.15s ease;
-}
-
-.suggested-questions button:hover {
-  background: #e8f0ff;
-  transform: translateY(-1px);
-}
-
-/* =========================
-   Chat Dark Mode
-   ========================= */
-
-.chat-widget.dark {
-  background: #0f172a;
-  color: #e5e7eb;
-}
-
-.chat-widget.dark .chat-header {
-  border-bottom: 1px solid #1e293b;
-}
-
-.chat-widget.dark .msg.user {
-  background: #1e293b;
-}
-
-.chat-widget.dark .msg.bot {
-  background: #1e40af;
-  color: #e5e7eb;
-}
-
-.chat-widget.dark .chat-form {
-  border-top: 1px solid #1e293b;
-}
-
-.chat-widget.dark .chat-form input {
-  background: #020617;
-  color: #e5e7eb;
-  border: 1px solid #1e293b;
-}
-
-.chat-widget.dark .chat-form input::placeholder {
-  color: #94a3b8;
-}
-
-.chat-widget.dark .chat-form button {
-  background: #1e40af;
-  color: #fff;
-}
-
-.chat-header .chat-controls {
-  display: flex;
-  gap: 6px;
-}
-
-.chat-header button {
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 16px;
-  color: inherit;
-}
-
-.chat-toggle.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.8);
-}
-
-/* =========================
-   Mobile Responsiveness
-   ========================= */
+/* =====================================================
+   MOBILE RESPONSIVENESS
+   ===================================================== */
 
 @media (max-width: 640px) {
   .chat-widget {
     width: calc(100% - 20px);
     height: 70vh;
-
     bottom: 10px;
     right: 10px;
-
     border-radius: 20px;
   }
 
@@ -354,7 +410,7 @@ nav a:hover {
   }
 
   .chat-form input {
-    font-size: 16px; /* prevents iOS zoom */
+    font-size: 16px;
     padding: 12px;
   }
 
@@ -368,3 +424,220 @@ nav a:hover {
     font-size: 14px;
   }
 }
+
+/* =====================================================
+   PROJECTS PAGE
+   ===================================================== */
+
+.projects {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.project-card {
+  background-color: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid var(--chat-border);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.project-card h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.project-description {
+  margin-bottom: 12px;
+  color: var(--text-secondary);
+}
+
+.project-tech,
+.project-status {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.project-cta {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--accent-blue);
+}
+
+
+/* =====================================================
+   CONTACT PAGE
+   ===================================================== */
+
+.contact-form {
+  max-width: 500px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--chat-border);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-family: inherit;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--text-secondary);
+}
+
+.contact-form textarea {
+  resize: vertical;
+}
+
+/* HERO */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  padding: 5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-content,
+.hero-image {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-waves {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  opacity: 0.85;
+  z-index: 0;
+}
+
+
+.hero-content {
+  max-width: 600px;
+}
+
+.hero h1 {
+  font-size: 2.75rem;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+}
+
+.hero-subtext {
+  font-size: 1.1rem;
+  color: #cfd8ff;
+  margin-bottom: 2rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.hero-image img {
+  width: 320px;
+  border-radius: 16px;
+  box-shadow: 0 0 40px rgba(120, 100, 255, 0.25);
+}
+
+/* About Page Container */
+.about {
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.about-card {
+  max-width: 900px;
+  width: 100%;
+
+  background: rgba(10, 15, 30, 0.75);
+  backdrop-filter: blur(8px);
+
+  border-radius: 20px;
+  padding: 3rem;
+
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+}
+
+.about h1 {
+  margin-bottom: 1.5rem;
+}
+
+.about h2 {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.about p {
+  max-width: 720px;
+  line-height: 1.75;
+  margin-bottom: 1.25rem;
+}
+
+.about ul {
+  margin-left: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.about li {
+  margin-bottom: 0.5rem;
+}
+
+/* =====================================================
+   CONTACT PAGE
+   ===================================================== */
+
+.contact {
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.contact-card {
+  max-width: 600px;
+  width: 100%;
+
+  background: rgba(10, 15, 30, 0.75);
+  backdrop-filter: blur(8px);
+
+  border-radius: 20px;
+  padding: 3rem;
+
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+}
+
+.contact h1 {
+  margin-bottom: 1rem;
+}
+
+.contact-intro {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background-color: rgba(15, 23, 42, 0.9);
+}
+
+.contact-form button {
+  margin-top: 0.5rem;
+}
+

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <%- include("partials/header") %>
+
+  <main class="contact">
+    <div class="contact-card">
+        <h1>Contact</h1>
+
+        <p>
+        I’d love to connect. Whether it’s about opportunities, projects, questions, 
+        or just a conversation—feel free to reach out.
+        </p>
+
+        <form class="contact-form" method="POST" action="/contact">
+        <input
+            type="text"
+            name="name"
+            placeholder="Your name"
+            required
+        />
+
+        <input
+            type="email"
+            name="email"
+            placeholder="Your email"
+            required
+        />
+
+        <input
+            type="text"
+            name="subject"
+            placeholder="Subject (optional)"
+            />
+
+
+        <textarea
+            name="message"
+            rows="5"
+            placeholder="Your message"
+            required
+        ></textarea>
+
+        <button type="submit" class="button">Send Message</button>
+        </form>
+    </div>
+  </main>
+
+  <%- include("partials/chatWidget") %>
+
+</body>
+</html>

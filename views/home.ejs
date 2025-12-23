@@ -8,10 +8,31 @@
 <body>
 
   <%- include("partials/header") %>
-
-  <h1>Welcome</h1>
-  <p>This is <strong><%= name %></strong>'s personal professional website.</p>
   
+  <section class="hero">
+
+    <div class="hero-content">
+      <h1>
+        Building data-driven systems at the intersection of analytics, web, and cloud.
+      </h1>
+
+      <p class="hero-subtext">
+        I’m Michael Davila, an Information Systems student at BYU exploring analytics,
+        full-stack development, and cloud systems through real projects and hands-on work.
+      </p>
+
+      <div class="hero-actions">
+        <a href="/projects" class="button primary">View Projects</a>
+        <a href="/contact" class="button secondary">Contact Me</a>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <img src="/images/michael.jpg" alt="Michael Davila portrait" />
+    </div>
+
+  </section>
+
   <%- include("partials/chatWidget") %>
 
 </body>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+    <%- include("partials/header") %>
+
+<main>
+  <h1>Projects</h1>
+
+  <p>
+    Here are a few projects that highlight my experience in analytics, systems thinking,
+    and project-focused problem solving. Each reflects how I approach real-world challenges
+    with structure, communication, and impact in mind.
+  </p>
+
+  <section class="projects">
+    <% profile.projects.forEach(project => { %>
+      <div class="project-card">
+
+        <h2><%= project.name %></h2>
+
+        <p class="project-description">
+          <%= project.description %>
+        </p>
+
+        <% if (project.technologies) { %>
+          <p class="project-tech">
+            <strong>Technologies:</strong>
+            <%= project.technologies.join(", ") %>
+          </p>
+        <% } %>
+
+        <p class="project-status">
+          <strong>Status:</strong> <%= project.status %>
+        </p>
+
+        <p class="project-cta">
+          Want more context? You can ask Chatty about this project.
+        </p>
+
+      </div>
+    <% }) %>
+  </section>
+
+  <p>
+    Interested in learning more or discussing these projects in depth?
+    Feel free to <a href="/contact">reach out</a> or chat with Chatty.
+  </p>
+</main>
+
+
+
+    <%- include("partials/chatWidget") %>
+</body>
+</html>
