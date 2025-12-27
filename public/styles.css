@@ -38,10 +38,18 @@
 body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
   background-color: var(--bg-primary);
-  background-image: url(images/waves.png);
+  background-image: url("/images/waves.png");
+
+  background-size: cover;          /* 👈 KEY FIX */
+  background-position: center;     /* center image */
+  background-repeat: no-repeat;    /* stop tiling */
+  background-attachment: fixed;    
+
   color: var(--text-primary);
 }
+
 
 /* Text hierarchy */
 p {
@@ -389,24 +397,26 @@ nav a.active {
 
 @media (max-width: 640px) {
   .chat-widget {
-    width: calc(100% - 20px);
-    height: 70vh;
-    bottom: 10px;
-    right: 10px;
-    border-radius: 20px;
+    width: 100%;
+    height: 100vh;
+
+    bottom: 0;
+    right: 0;
+
+    border-radius: 0;
+
+    box-shadow: none;
   }
 
   .chat-toggle {
-    bottom: 16px;
-    right: 16px;
-    width: 60px;
-    height: 60px;
-    font-size: 24px;
+    width: 68px;
+    height: 68px;
+    font-size: 26px;
   }
 
   .chat-header {
-    padding: 14px 16px;
-    font-size: 16px;
+    font-size: 18px;
+    padding: 16px;
   }
 
   .chat-form input {
@@ -419,9 +429,60 @@ nav a.active {
     font-size: 14px;
   }
 
+  .chat-box {
+    padding: 16px;
+  }
+
+  .chat-form {
+    padding: 14px;
+  }
+
   .msg {
     max-width: 90%;
     font-size: 14px;
+  }
+
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+    line-height: 1.25;
+  }
+
+  .hero-subtext {
+    font-size: 1rem;
+  }
+
+  .hero-actions {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-image img {
+    width: 220px;
+    margin-top: 2rem;
+  }
+
+  .contact-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 16px; /* prevents iOS zoom */
+  }
+
+  .contact-form button {
+    padding: 14px;
+    font-size: 16px;
   }
 }
 
@@ -639,5 +700,24 @@ nav a.active {
 
 .contact-form button {
   margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
+}
+
+.hero-title {
+  opacity: 0;
+  transform: perspective(800px) rotateY(-8deg) translateX(-20px);
+  animation: heroTiltIn 3s ease-out forwards;
+}
+
+@keyframes heroTiltIn {
+  to {
+    opacity: 1;
+    transform: perspective(800px) rotateY(0deg) translateX(0);
+  }
 }
 

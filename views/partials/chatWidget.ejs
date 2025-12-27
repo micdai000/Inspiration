@@ -74,7 +74,7 @@
 
   addMessage(
     "bot",
-    "Hi! I’m Chatty 👋\n\nAsk me anything about Michael’s background, projects, strengths, or interests."
+    "Hi! I’m Orion 👋\n\nAsk me anything about Michael’s background, projects, strengths, or interests."
   );
 
   suggestedQuestions.classList.remove("hidden");
@@ -84,7 +84,7 @@
 
   function sendQuestion(question) {
   addMessage("user", question);
-  addMessage("bot", "Chatty is thinking…");
+  addMessage("bot", "Orion is thinking…");
 
   suggestedQuestions.classList.add("hidden");
 
@@ -130,7 +130,7 @@
     addMessage("user", question);
     questionInput.value = "";
 
-    addMessage("bot", "Chatty is thinking…");
+    addMessage("bot", "Orion is thinking…");
 
     try {
       const res = await fetch("/ask", {
